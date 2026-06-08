@@ -6,6 +6,13 @@ Custom extensions for **Ableton Live 12** built with the official [Ableton Exten
 
 ## Extensions
 
+| Extension | Download |
+| --- | --- |
+| [Cue Templates](#cue-templates) | [⬇ cue-templates.ablx](cue-templates/cue-templates.ablx) |
+| [Snare Roll Builder](#snare-roll-builder) | [⬇ snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx) |
+
+---
+
 ### Cue Templates
 
 > Drop pre-built cue marker sets into your arrangement in one click — choose from 6 built-in genre templates or create and manage your own.
@@ -13,12 +20,13 @@ Custom extensions for **Ableton Live 12** built with the official [Ableton Exten
 Based on [xmllint/ableton-cue-templates](https://github.com/xmllint/ableton-cue-templates), extended with custom genre template management, persistent storage, and a redesigned UI.
 
 | | |
-|---|---|
+| --- | --- |
 | **Version** | 0.1.0 |
 | **Requires** | Ableton Live 12.2+ |
 | **Platform** | macOS / Windows |
 
-**Features**
+Features:
+
 - 6 built-in genre templates (House, Techno, Drum & Bass, Hip Hop, Ambient, Pop)
 - Custom genre templates — create, edit, and reorder your own section layouts
 - Import sections from existing cue points in your arrangement
@@ -36,12 +44,12 @@ Based on [xmllint/ableton-cue-templates](https://github.com/xmllint/ableton-cue-
 > Generate genre-specific snare rolls directly into a MIDI clip — right-click any clip slot and choose your genre.
 
 | | |
-|---|---|
+| --- | --- |
 | **Version** | 0.1.0 |
 | **Requires** | Ableton Live 12.2+ |
 | **Platform** | macOS / Windows |
 
-**Features**
+Features:
 
 - 8 genre presets: House / Tech House, Techno, Drum & Bass, Trap, Hip-Hop, Hard House, Hard Techno, Hard Dance
 - Full parameter control: roll length (1/2/4 bars), start/end subdivision (8th/16th/32nd), acceleration (linear/exponential/step)
