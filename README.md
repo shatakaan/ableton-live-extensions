@@ -10,6 +10,8 @@ Custom extensions for **Ableton Live 12** built with the official [Ableton Exten
 
 > Drop pre-built cue marker sets into your arrangement in one click — choose from 6 built-in genre templates or create and manage your own.
 
+Based on [xmllint/ableton-cue-templates](https://github.com/xmllint/ableton-cue-templates), extended with custom genre template management, persistent storage, and a redesigned UI.
+
 | | |
 |---|---|
 | **Version** | 0.1.0 |
