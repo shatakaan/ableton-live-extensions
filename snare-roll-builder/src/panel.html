@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Snare Roll Builder</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#131313;color:#e2e2e2;padding:16px 20px;user-select:none;-webkit-user-select:none;overflow-y:auto}
+  h2{font-size:15px;font-weight:600;margin-bottom:2px}
+  .sub{font-size:11px;color:#888;margin-bottom:12px}
+  .genre-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+  .genre-card{background:#1f1f1f;border:1px solid #2a2a2a;padding:8px 10px;cursor:pointer;text-align:left;color:#e2e2e2;font-family:inherit;font-size:11px;font-weight:500;width:100%;transition:all .1s}
+  .genre-card:hover{background:#2a2a2a;border-color:#d4ff00}
+  .genre-card.active{background:#1c2100;border-color:#d4ff00;color:#d4ff00}
+  .section{border:1px solid #2a2a2a;margin-bottom:6px}
+  .sec-hdr{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:600;background:#1a1a1a}
+  .sec-hdr:hover{background:#222}
+  .arr{font-size:9px;color:#888;transition:transform .15s}
+  .arr.open{transform:rotate(90deg)}
+  .sec-body{padding:10px;display:none}
+  .sec-body.open{display:block}
+  .row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .row:last-child{margin-bottom:0}
+  .lbl{font-size:10px;color:#888;min-width:72px}
+  .btn-grp{display:flex;gap:4px}
+  .btn{font-size:10px;background:#1f1f1f;border:1px solid #2a2a2a;color:#888;padding:4px 8px;cursor:pointer;font-family:inherit;transition:all .1s}
+  .btn:hover{background:#2a2a2a;border-color:#444}
+  .btn.active{background:#1c2100;border-color:#d4ff00;color:#d4ff00}
+  .sl-wrap{display:flex;align-items:center;gap:8px;flex:1}
+  input[type=range]{flex:1;accent-color:#d4ff00;height:4px}
+  .sl-val{font-size:10px;color:#e2e2e2;min-width:30px;text-align:right;font-family:'JetBrains Mono',monospace}
+  .tog{position:relative;width:32px;height:18px;cursor:pointer;flex-shrink:0}
+  .tog input{display:none}
+  .tog-track{position:absolute;inset:0;background:#2a2a2a;border:1px solid #444;transition:all .2s}
+  .tog input:checked + .tog-track{background:#1c2100;border-color:#d4ff00}
+  .tog-thumb{position:absolute;top:3px;left:3px;width:10px;height:10px;background:#888;transition:all .2s}
+  .tog input:checked + .tog-track + .tog-thumb{left:17px;background:#d4ff00}
+  input[type=number]{background:#1f1f1f;border:1px solid #2a2a2a;color:#e2e2e2;padding:4px 6px;font-size:10px;font-family:'JetBrains Mono',monospace;width:52px}
+  input[type=number]:focus{outline:none;border-color:#d4ff00}
+  .divider{height:1px;background:#2a2a2a;margin:10px 0}
+  .target-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .btn-row{display:flex;gap:8px}
+  .btn-gen{flex:1;padding:10px;background:#1c2100;border:1px solid #d4ff00;color:#d4ff00;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .1s}
+  .btn-gen:hover{background:#2a3300;box-shadow:0 0 8px rgba(212,255,0,.3)}
+  .btn-gen:disabled{opacity:.4;cursor:default}
+  .btn-cancel{padding:10px 16px;background:#1a1a1a;border:1px solid #333;color:#888;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .1s}
+  .btn-cancel:hover{background:#222;border-color:#555;color:#bbb}
+  .status-ok{margin-top:8px;padding:6px 8px;background:#1c2100;border:1px solid #d4ff00;color:#d4ff00;font-size:11px}
+  .status-err{margin-top:8px;padding:6px 8px;background:#1f0000;border:1px solid #ff4444;color:#ff8888;font-size:11px}
+</style></head>
+<body>
+  <h2>Snare Roll Builder</h2>
+  <p class="sub">Genre wählen → Parameter anpassen → Generate</p>
+  <div class="genre-grid" id="genre-grid"></div>
+
+  <div class="section">
+    <div class="sec-hdr" onclick="tog('shape')"><span>Roll Shape</span><span class="arr" id="arr-shape">&#9658;</span></div>
+    <div class="sec-body" id="body-shape">
+      <div class="row"><span class="lbl">Länge</span>
+        <div class="btn-grp" id="grp-rollLength">
+          <button class="btn" data-v="1" onclick="sv('rollLength',1,this)">1 Bar</button>
+          <button class="btn" data-v="2" onclick="sv('rollLength',2,this)">2 Bars</button>
+          <button class="btn" data-v="4" onclick="sv('rollLength',4,this)">4 Bars</button>
+        </div>
+      </div>
+      <div class="row"><span class="lbl">Start Sub</span>
+        <div class="btn-grp" id="grp-startSub">
+          <button class="btn" data-v="8th" onclick="sv('startSub','8th',this)">8tel</button>
+          <button class="btn" data-v="16th" onclick="sv('startSub','16th',this)">16tel</button>
+          <button class="btn" data-v="32nd" onclick="sv('startSub','32nd',this)">32tel</button>
+        </div>
+      </div>
+      <div class="row"><span class="lbl">End Sub</span>
+        <div class="btn-grp" id="grp-endSub">
+          <button class="btn" data-v="8th" onclick="sv('endSub','8th',this)">8tel</button>
+          <button class="btn" data-v="16th" onclick="sv('endSub','16th',this)">16tel</button>
+          <button class="btn" data-v="32nd" onclick="sv('endSub','32nd',this)">32tel</button>
+        </div>
+      </div>
+      <div class="row"><span class="lbl">Acceleration</span>
+        <div class="btn-grp" id="grp-acceleration">
+          <button class="btn" data-v="linear" onclick="sv('acceleration','linear',this)">linear</button>
+          <button class="btn" data-v="exponential" onclick="sv('acceleration','exponential',this)">exp</button>
+          <button class="btn" data-v="step" onclick="sv('acceleration','step',this)">step</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hdr" onclick="tog('dynamics')"><span>Dynamics</span><span class="arr" id="arr-dynamics">&#9658;</span></div>
+    <div class="sec-body" id="body-dynamics">
+      <div class="row"><span class="lbl">Vel Start</span>
+        <div class="sl-wrap"><input type="range" min="0" max="127" id="sl-velStart" oninput="onSl('velStart',this)"><span class="sl-val" id="lbl-velStart">40</span></div>
+      </div>
+      <div class="row"><span class="lbl">Vel Ende</span>
+        <div class="sl-wrap"><input type="range" min="0" max="127" id="sl-velEnd" oninput="onSl('velEnd',this)"><span class="sl-val" id="lbl-velEnd">127</span></div>
+      </div>
+      <div class="row"><span class="lbl">Vel Kurve</span>
+        <div class="btn-grp" id="grp-velCurve">
+          <button class="btn" data-v="linear" onclick="sv('velCurve','linear',this)">linear</button>
+          <button class="btn" data-v="exponential" onclick="sv('velCurve','exponential',this)">exp</button>
+        </div>
+      </div>
+      <div class="row"><span class="lbl">Humanize</span>
+        <label class="tog"><input type="checkbox" id="chk-hum" onchange="cfg.humanize=this.checked"><span class="tog-track"></span><span class="tog-thumb"></span></label>
+        <div class="sl-wrap"><input type="range" min="0" max="50" id="sl-hum" oninput="onSl('humanize',this)"><span class="sl-val" id="lbl-hum">15%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-hdr" onclick="tog('pitch')"><span>Pitch &amp; Note</span><span class="arr" id="arr-pitch">&#9658;</span></div>
+    <div class="sec-body" id="body-pitch">
+      <div class="row"><span class="lbl">MIDI Note</span>
+        <input type="number" id="inp-note" min="0" max="127" value="38" oninput="cfg.midiNote=Math.max(0,Math.min(127,parseInt(this.value)||0))">
+      </div>
+      <div class="row"><span class="lbl">Pitch Rise</span>
+        <div class="sl-wrap"><input type="range" min="0" max="12" id="sl-pitch" oninput="onSl('pitchRise',this)"><span class="sl-val" id="lbl-pitch">0 st</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="target-row">
+    <span class="lbl" style="min-width:auto">Ziel:</span>
+    <div class="btn-grp" id="grp-target">
+      <button class="btn active" data-v="selected" onclick="sv('target','selected',this)">Ausgew. Clip</button>
+      <button class="btn" data-v="new" onclick="sv('target','new',this)">Neuer Clip</button>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-gen" id="btn-gen" onclick="doGen()">GENERATE SNARE ROLL</button>
+    <button class="btn-cancel" onclick="send({action:'cancel'})">✕</button>
+  </div>
+  __STATUS_HTML__
+
+  <script>
+    var presets = __PRESETS_JSON__;
+    if (!presets || !presets.length) { document.body.innerHTML = '<p style="color:#ff4444;padding:16px">Error: no presets loaded</p>'; throw new Error('no presets'); }
+    var cfg = Object.assign({}, presets[0].defaults);
+    var targetMode = 'selected';
+
+    function send(data) {
+      var msg = { method: 'close_and_send', params: [JSON.stringify(data)] };
+      if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.live) {
+        window.webkit.messageHandlers.live.postMessage(msg);
+      } else if (window.chrome && window.chrome.webview) {
+        window.chrome.webview.postMessage(msg);
+      }
+    }
+
+    function sv(key, val, btn) {
+      if (key === 'rollLength') cfg.rollLength = val;
+      else if (key === 'startSub') cfg.startSubdivision = val;
+      else if (key === 'endSub') cfg.endSubdivision = val;
+      else if (key === 'acceleration') cfg.acceleration = val;
+      else if (key === 'velCurve') cfg.velocityCurve = val;
+      else if (key === 'target') { targetMode = val; }
+      var grpMap = { rollLength:'grp-rollLength', startSub:'grp-startSub', endSub:'grp-endSub', acceleration:'grp-acceleration', velCurve:'grp-velCurve', target:'grp-target' };
+      var grpId = grpMap[key];
+      if (grpId) {
+        document.getElementById(grpId).querySelectorAll('.btn').forEach(function(b) {
+          b.className = 'btn' + (String(b.dataset.v) === String(val) ? ' active' : '');
+        });
+      }
+    }
+
+    function onSl(key, el) {
+      var v = parseInt(el.value);
+      if (key === 'velStart') { cfg.velocityStart = v; document.getElementById('lbl-velStart').textContent = v; }
+      else if (key === 'velEnd') { cfg.velocityEnd = v; document.getElementById('lbl-velEnd').textContent = v; }
+      else if (key === 'humanize') { cfg.humanizeAmount = v / 100; document.getElementById('lbl-hum').textContent = v + '%'; }
+      else if (key === 'pitchRise') { cfg.pitchRise = v; document.getElementById('lbl-pitch').textContent = v + ' st'; }
+    }
+
+    function tog(name) {
+      var b = document.getElementById('body-' + name);
+      var a = document.getElementById('arr-' + name);
+      var open = b.classList.contains('open');
+      b.className = 'sec-body' + (open ? '' : ' open');
+      a.className = 'arr' + (open ? '' : ' open');
+    }
+
+    function syncUI() {
+      [['grp-rollLength', cfg.rollLength], ['grp-startSub', cfg.startSubdivision], ['grp-endSub', cfg.endSubdivision],
+       ['grp-acceleration', cfg.acceleration], ['grp-velCurve', cfg.velocityCurve]].forEach(function(pair) {
+        document.getElementById(pair[0]).querySelectorAll('.btn').forEach(function(b) {
+          b.className = 'btn' + (String(b.dataset.v) === String(pair[1]) ? ' active' : '');
+        });
+      });
+      document.getElementById('sl-velStart').value = cfg.velocityStart;
+      document.getElementById('lbl-velStart').textContent = cfg.velocityStart;
+      document.getElementById('sl-velEnd').value = cfg.velocityEnd;
+      document.getElementById('lbl-velEnd').textContent = cfg.velocityEnd;
+      document.getElementById('chk-hum').checked = cfg.humanize;
+      var humPct = Math.round(cfg.humanizeAmount * 100);
+      document.getElementById('sl-hum').value = humPct;
+      document.getElementById('lbl-hum').textContent = humPct + '%';
+      document.getElementById('inp-note').value = cfg.midiNote;
+      document.getElementById('sl-pitch').value = cfg.pitchRise;
+      document.getElementById('lbl-pitch').textContent = cfg.pitchRise + ' st';
+      document.getElementById('grp-target').querySelectorAll('.btn').forEach(function(b) {
+        b.className = 'btn' + (String(b.dataset.v) === String(targetMode) ? ' active' : '');
+      });
+    }
+
+    function applyPreset(p) {
+      cfg = Object.assign({}, p.defaults);
+      targetMode = 'selected';
+      document.querySelectorAll('.genre-card').forEach(function(c) {
+        c.className = 'genre-card' + (c.dataset.id === p.id ? ' active' : '');
+      });
+      syncUI();
+    }
+
+    function doGen() {
+      document.getElementById('btn-gen').disabled = true;
+      send({ action: 'generate', config: cfg, targetMode: targetMode });
+    }
+
+    // Build genre cards
+    presets.forEach(function(p) {
+      var btn = document.createElement('button');
+      btn.className = 'genre-card';
+      btn.dataset.id = p.id;
+      btn.textContent = p.label;
+      btn.onclick = function() { applyPreset(p); };
+      document.getElementById('genre-grid').appendChild(btn);
+    });
+
+    applyPreset(presets[0]);
+  </script>
+</body></html>

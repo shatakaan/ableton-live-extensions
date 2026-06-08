@@ -31,6 +31,30 @@ Based on [xmllint/ableton-cue-templates](https://github.com/xmllint/ableton-cue-
 
 ---
 
+### Snare Roll Builder
+
+> Generate genre-specific snare rolls directly into a MIDI clip — right-click any clip slot and choose your genre.
+
+| | |
+|---|---|
+| **Version** | 0.1.0 |
+| **Requires** | Ableton Live 12.2+ |
+| **Platform** | macOS / Windows |
+
+**Features**
+
+- 8 genre presets: House / Tech House, Techno, Drum & Bass, Trap, Hip-Hop, Hard House, Hard Techno, Hard Dance
+- Full parameter control: roll length (1/2/4 bars), start/end subdivision (8th/16th/32nd), acceleration (linear/exponential/step)
+- Velocity ramp with linear or exponential curve, humanize with adjustable amount
+- Pitch rise across the roll, configurable MIDI note
+- Target: existing MIDI clip or new clip in slot
+
+**[⬇ Download snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx)**
+
+> Source and full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
+
+---
+
 ## Installation
 
 1. Download the `.ablx` file for the extension you want.
