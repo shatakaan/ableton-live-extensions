@@ -25,6 +25,8 @@ Custom extensions for **Ableton Live 12** built with the official [Ableton Exten
 
 **[⬇ Download cue-templates.ablx](cue-templates/cue-templates.ablx)**
 
+> Source and full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
+
 ---
 
 ## Installation
