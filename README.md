@@ -6,10 +6,10 @@ Custom extensions for **Ableton Live 12** built with the official [Ableton Exten
 
 ## Extensions
 
-| Extension | Download |
-| --- | --- |
-| [Cue Templates](#cue-templates) | [⬇ cue-templates.ablx](cue-templates/cue-templates.ablx) |
-| [Snare Roll Builder](#snare-roll-builder) | [⬇ snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx) |
+| Extension | Install | Source |
+| --- | --- | --- |
+| [Cue Templates](#cue-templates) | [⬇ cue-templates.ablx](cue-templates/cue-templates.ablx) | [⬇ cue-templates-source.zip](cue-templates/cue-templates-source.zip) |
+| [Snare Roll Builder](#snare-roll-builder) | [⬇ snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx) | [⬇ snare-roll-builder-source.zip](snare-roll-builder/snare-roll-builder-source.zip) |
 
 ---
 
@@ -33,9 +33,9 @@ Features:
 - Drag-and-drop section reorder
 - Persists custom templates across Live restarts
 
-**[⬇ Download cue-templates.ablx](cue-templates/cue-templates.ablx)**
+**[⬇ Download cue-templates.ablx](cue-templates/cue-templates.ablx)** · **[⬇ Source + .ablx (ZIP)](cue-templates/cue-templates-source.zip)**
 
-> Source and full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
+> Full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
 
 ---
 
@@ -57,9 +57,9 @@ Features:
 - Pitch rise across the roll, configurable MIDI note
 - Target: existing MIDI clip or new clip in slot
 
-**[⬇ Download snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx)**
+**[⬇ Download snare-roll-builder.ablx](snare-roll-builder/snare-roll-builder.ablx)** · **[⬇ Source + .ablx (ZIP)](snare-roll-builder/snare-roll-builder-source.zip)**
 
-> Source and full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
+> Full development history: [shatakaan/ableton-extensions](https://github.com/shatakaan/ableton-extensions)
 
 ---
 
